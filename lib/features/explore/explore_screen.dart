@@ -16,10 +16,12 @@ class ExploreScreen extends StatefulWidget {
 
 class _ExploreScreenState extends State<ExploreScreen> {
   late final ExploreController _controller;
+  bool _depsInitialized = false;
 
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_depsInitialized) return;
     final deps = AppDependencies.of(context);
     _controller = ExploreController(deps.webBookService);
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -28,6 +30,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
         _controller.setSources(bookshelf.sources);
       }
     });
+    _depsInitialized = true;
   }
 
   BookshelfController? _findBookshelfController(BuildContext context) {

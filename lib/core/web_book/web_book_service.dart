@@ -1,3 +1,6 @@
+import '../entities/book_source_model.dart';
+import '../entities/search_book_model.dart';
+import '../entities/session_book.dart';
 import '../network/legado_http_client.dart';
 import 'web_book_content_service.dart';
 import 'web_book_search_service.dart';

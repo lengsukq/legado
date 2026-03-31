@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../core/entities/session_book.dart';
 import '../../core/history/history_repository.dart';
+import '../../core/models/book_progress.dart';
 import '../../core/web_book/web_book_service.dart';
 import 'chapter_read_page.dart';
 

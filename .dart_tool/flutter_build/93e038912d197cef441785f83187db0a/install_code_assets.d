@@ -1,0 +1,1 @@
+ C:\\Users\\su\\WebstormProjects\\legado\\.dart_tool\\flutter_build\\93e038912d197cef441785f83187db0a\\native_assets.json: 

@@ -44,7 +44,7 @@ class RuleAnalyzerLite {
       ..addAll(vars);
   }
 
-  htmlparser.Document? _rootDoc;
+  dynamic _rootDoc;
   dynamic _jsonRoot;
 
   static final _js = RegExp(
@@ -108,7 +108,7 @@ class RuleAnalyzerLite {
         }
         if (items.isEmpty && !_looksExplicitJson(r)) {
           throw LegadoUnsupportedException(
-            '响应为 JSON 时，请使用 $. / @Json: 形式的路径作为列表规则',
+            '响应为 JSON 时，请使用 \$. / @Json: 形式的路径作为列表规则',
           );
         }
       } else if (_looksLikeXPath(r)) {

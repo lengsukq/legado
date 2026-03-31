@@ -5,7 +5,7 @@ import 'core/network/legado_http_client.dart';
 import 'core/web_book/web_book_service.dart';
 
 class AppDependencies extends InheritedWidget {
-  const AppDependencies({
+  AppDependencies({
     super.key,
     required super.child,
     required this.httpClient,

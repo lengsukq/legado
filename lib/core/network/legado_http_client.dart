@@ -15,13 +15,11 @@ class LegadoHttpResponse {
 class LegadoHttpClient {
   LegadoHttpClient() {
     _baseOptions = BaseOptions(
-      BaseOptions(
-        connectTimeout: const Duration(seconds: 30),
-        receiveTimeout: const Duration(seconds: 60),
-        responseType: ResponseType.plain,
-        followRedirects: true,
-        validateStatus: (s) => s != null && s < 500,
-      ),
+      connectTimeout: const Duration(seconds: 30),
+      receiveTimeout: const Duration(seconds: 60),
+      responseType: ResponseType.plain,
+      followRedirects: true,
+      validateStatus: (s) => s != null && s < 500,
     );
   }
 

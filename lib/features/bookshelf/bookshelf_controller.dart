@@ -4,6 +4,7 @@ import '../../core/book_source_codec.dart';
 import '../../core/book_source_import_service.dart';
 import '../../core/entities/book_source_model.dart';
 import '../../core/entities/search_book_model.dart';
+import '../../core/entities/session_book.dart';
 import '../../core/history/read_record_model.dart';
 import '../../core/history/history_repository.dart';
 import '../../core/tools/book_source_inspector.dart';
@@ -22,6 +23,7 @@ class BookshelfController extends ChangeNotifier {
   String? _error;
   List<ReadRecordModel> _recent = const [];
   final Map<BookSourceModel, BookSourceInspectionResult> _inspections = {};
+  HistoryRepository? _historyRepository;
 
   List<BookSourceModel> get sources => _sources;
   BookSourceModel? get selectedSource => _selected;

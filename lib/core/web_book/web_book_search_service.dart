@@ -204,6 +204,27 @@ class WebBookSearchService {
     return book;
   }
 
+  Future<SessionBook> loadBookDetail(
+    BookSourceModel source,
+    SearchBookModel hit,
+  ) async {
+    final targetUrl = hit.bookUrl.isNotEmpty ? hit.bookUrl : hit.tocUrl;
+    if (targetUrl.isEmpty) {
+      throw StateError('搜索结果缺少书籍详情 URL');
+    }
+    final req = AnalyzeUrlLite.build(
+      source: source,
+      template: targetUrl,
+      page: 1,
+    );
+    final res = await _fetchPrepared(source, req);
+    return loadBookDetailFromHtml(
+      source: source,
+      baseUrl: res.finalUrl,
+      html: res.body,
+    );
+  }
+
   void _checkLoginJs(BookSourceModel s) {
     final c = s.loginCheckJs;
     if (c != null && c.trim().isNotEmpty) {

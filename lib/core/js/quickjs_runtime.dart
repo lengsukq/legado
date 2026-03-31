@@ -1,38 +1,16 @@
-import 'dart:convert';
-
-import 'package:quickjs/quickjs.dart';
-
-/// Thin wrapper around quickjs-dart sync engine.
+/// QuickJS runtime shim.
 ///
-/// 目标：提供一个简单的 `eval` 入口，后续再逐步填充与 Rhino 等价的上下文注入。
+/// 为了先让桌面端（如 Windows）可以顺利编译运行，这里暂时提供一个空实现。
+/// 后续如果需要在桌面端启用 JS 解析，再替换为 `quickjs` 的真实绑定实现。
 class QuickJsRuntime {
-  QuickJsRuntime._() {
-    _nativeManager = NativeEngineManager();
-    _nativeEngine = NativeJsEngine(name: 'legado');
-  }
+  QuickJsRuntime._();
 
   static final QuickJsRuntime instance = QuickJsRuntime._();
 
-  late final NativeEngineManager _nativeManager;
-  late final NativeJsEngine _nativeEngine;
-
-  /// Evaluate JS code synchronously and return `result.value` as Dart value.
-  ///
-  /// 当前仅支持通过 JSON 注入简单参数：
-  /// - 在 JS 中通过 `__args` 访问参数对象。
-  /// 后续再逐步扩展为与 Rhino 一致的多对象注入。
   dynamic eval(String code, {Map<String, Object?> args = const {}}) {
-    final argsJson = jsonEncode(args);
-    final wrapped = StringBuffer()
-      ..writeln('const __args = JSON.parse(${jsonEncode(argsJson)});')
-      ..writeln(code);
-    final result = _nativeEngine.eval(wrapped.toString());
-    return result.value;
+    throw UnimplementedError('QuickJsRuntime is not available on this platform yet.');
   }
 
-  void dispose() {
-    _nativeEngine.dispose();
-    _nativeManager.dispose();
-  }
+  void dispose() {}
 }
 

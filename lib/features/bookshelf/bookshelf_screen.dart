@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../core/entities/book_source_model.dart';
 import '../../core/entities/search_book_model.dart';
 import '../../app_dependencies.dart';
 import 'bookshelf_controller.dart';
@@ -20,6 +21,7 @@ class _BookshelfScreenState extends State<BookshelfScreen> {
   final _sourceCtrl = TextEditingController();
   final _keywordCtrl = TextEditingController();
   late final BookshelfController _controller;
+  bool _depsInitialized = false;
 
   @override
   void dispose() {
@@ -30,8 +32,9 @@ class _BookshelfScreenState extends State<BookshelfScreen> {
   }
 
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_depsInitialized) return;
     final deps = AppDependencies.of(context);
     _controller = BookshelfController(deps.webBookService);
     deps.historyRepository().then((repo) {
@@ -39,6 +42,7 @@ class _BookshelfScreenState extends State<BookshelfScreen> {
         _controller.initialize(repo);
       }
     });
+    _depsInitialized = true;
   }
 
   Future<void> _parseSources() async {
