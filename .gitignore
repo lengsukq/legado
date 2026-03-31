@@ -1,18 +1,10 @@
-*.iml
-.gradle
-local.properties
+# Flutter
+flutter/.dart_tool/
+flutter/build/
+flutter/android/local.properties
+flutter/android/.gradle/
+flutter/*.iml
+
+# OS / IDE
 .DS_Store
-/build
-build/
-/captures
-.externalNativeBuild
-/release
-/tmp
-node_modules/
-/native/app/app
-/native/app/google
-/native/app/gradle.properties
-package-lock.json
 .idea/
-# Kotlin 2.0
-.kotlin/
