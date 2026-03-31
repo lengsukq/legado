@@ -54,31 +54,34 @@ jobs:
         run: |
           # not use this output
           # echo "KeyStore=yes" >> $GITHUB_OUTPUT
-          echo -e "\n" >> gradle.properties
-          echo RELEASE_KEY_ALIAS='${{ secrets.RELEASE_KEY_ALIAS }}' >> gradle.properties
-          echo RELEASE_KEY_PASSWORD='${{ secrets.RELEASE_KEY_PASSWORD }}' >> gradle.properties
-          echo RELEASE_STORE_PASSWORD='${{ secrets.RELEASE_STORE_PASSWORD }}' >> gradle.properties
-          echo RELEASE_STORE_FILE='./key.jks' >> gradle.properties
-          echo ${{ secrets.RELEASE_KEY_STORE }} | base64 --decode > $GITHUB_WORKSPACE/app/key.jks
+          echo -e "\n" >> native/gradle.properties
+          echo RELEASE_KEY_ALIAS='${{ secrets.RELEASE_KEY_ALIAS }}' >> native/gradle.properties
+          echo RELEASE_KEY_PASSWORD='${{ secrets.RELEASE_KEY_PASSWORD }}' >> native/gradle.properties
+          echo RELEASE_STORE_PASSWORD='${{ secrets.RELEASE_STORE_PASSWORD }}' >> native/gradle.properties
+          echo RELEASE_STORE_FILE='./key.jks' >> native/gradle.properties
+          echo ${{ secrets.RELEASE_KEY_STORE }} | base64 --decode > $GITHUB_WORKSPACE/native/app/key.jks
 
       - name: Unify Version Name
         run: |
           echo "统一版本号"
-          sed "/def version/c def version = \"${{ env.VERSION }}\"" $GITHUB_WORKSPACE/app/build.gradle  -i
+          sed "/def version/c def version = \"${{ env.VERSION }}\"" $GITHUB_WORKSPACE/native/app/build.gradle  -i
 
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
+        with:
+          build-root-directory: native
 
       - name: Build With Gradle
         run: |
           echo "开始进行${{ env.product }}构建"
+          cd native
           chmod +x gradlew
           ./gradlew assemble${{ env.product }}release --build-cache --parallel --daemon --warning-mode all
 
       - name: Organize the Files
         run: |
           mkdir -p ${{ github.workspace }}/apk/
-          cp -rf ${{ github.workspace }}/app/build/outputs/apk/*/*/*.apk ${{ github.workspace }}/apk/
+          cp -rf ${{ github.workspace }}/native/app/build/outputs/apk/*/*/*.apk ${{ github.workspace }}/apk/
           
       - name: Upload App To Artifact
         uses: actions/upload-artifact@v4

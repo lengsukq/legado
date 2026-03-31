@@ -9,9 +9,9 @@ build/
 /release
 /tmp
 node_modules/
-/app/app
-/app/google
-/app/gradle.properties
+/native/app/app
+/native/app/google
+/native/app/gradle.properties
 package-lock.json
 .idea/
 # Kotlin 2.0

@@ -1,12 +1,14 @@
 # [English](English.md) [中文](README.md)
 
+仓库布局：**原 Android 客户端**位于 [`native/`](native/README.md)；**Web 端**位于 [`modules/web/`](modules/web/README.md)。
+
 [![icon_android](https://github.com/gedoor/gedoor.github.io/blob/master/static/img/legado/icon_android.png)](https://play.google.com/store/apps/details?id=io.legado.play.release)
 <a href="https://jb.gg/OpenSourceSupport" target="_blank">
 <img width="24" height="24" src="https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.svg?_gl=1*135yekd*_ga*OTY4Mjg4NDYzLjE2Mzk0NTE3MzQ.*_ga_9J976DJZ68*MTY2OTE2MzM5Ny4xMy4wLjE2NjkxNjMzOTcuNjAuMC4w&_ga=2.257292110.451256242.1669085120-968288463.1639451734" alt="idea"/>
 </a>
 
 <div align="center">
-<img width="125" height="125" src="https://github.com/gedoor/legado/raw/master/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" alt="legado"/>  
+<img width="125" height="125" src="https://github.com/gedoor/legado/raw/master/native/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" alt="legado"/>  
   
 Legado / 开源阅读
 <br>
@@ -59,7 +61,7 @@ https://www.yuque.com/legado/wiki/community
 # API [![](https://img.shields.io/badge/-API-F5F5F5.svg)](#API-)
 * 阅读3.0 提供了2种方式的API：`Web方式`和`Content Provider方式`。您可以在[这里](api.md)根据需要自行调用。 
 * 可通过url唤起阅读进行一键导入,url格式: legado://import/{path}?src={url}
-* path类型: bookSource,rssSource,replaceRule,textTocRule,httpTTS,theme,readConfig,dictRule,[addToBookshelf](/app/src/main/java/io/legado/app/ui/association/AddToBookshelfDialog.kt)
+* path类型: bookSource,rssSource,replaceRule,textTocRule,httpTTS,theme,readConfig,dictRule,[addToBookshelf](/native/app/src/main/java/io/legado/app/ui/association/AddToBookshelfDialog.kt)
 * path类型解释: 书源,订阅源,替换规则,本地txt小说目录规则,在线朗读引擎,主题,阅读排版,添加到书架
 
 <a href="#readme">
@@ -72,8 +74,8 @@ https://gedoor.github.io/Disclaimer
 
 ##### 阅读3.0
 * [书源规则](https://mgz0227.github.io/The-tutorial-of-Legado/)
-* [更新日志](/app/src/main/assets/updateLog.md)
-* [帮助文档](/app/src/main/assets/web/help/md/appHelp.md)
+* [更新日志](/native/app/src/main/assets/updateLog.md)
+* [帮助文档](/native/app/src/main/assets/web/help/md/appHelp.md)
 * [web端书架](https://github.com/gedoor/legado_web_bookshelf)
 * [web端源编辑](https://github.com/gedoor/legado_web_source_editor)
 

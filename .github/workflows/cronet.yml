@@ -25,10 +25,13 @@ jobs:
 
       - uses: gradle/actions/setup-gradle@v4
         if: ${{ env.cronet == 'ok' }}
+        with:
+          build-root-directory: native
 
       - name: Download Cronet
         if: ${{ env.cronet == 'ok' }}
         run: |
+          cd native
           chmod +x gradlew
           ./gradlew app:downloadCronet
 
@@ -46,8 +49,8 @@ jobs:
           branch: cronet
           delete-branch: true
           add-paths: |
-            *cronet*jar
-            *cronet.json
-            *updateLog.md
-            *gradle.properties
-            *cronet-proguard-rules.pro
+            native/**/*cronet*jar
+            native/**/*cronet.json
+            native/**/updateLog.md
+            native/gradle.properties
+            native/**/cronet-proguard-rules.pro
