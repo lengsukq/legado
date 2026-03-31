@@ -1,0 +1,4 @@
+# Copy to local.properties (do not commit local.properties).
+# Windows example:
+sdk.dir=C\:\\Users\\YOU\\AppData\\Local\\Android\\Sdk
+flutter.sdk=C\:\\path\\to\\flutter

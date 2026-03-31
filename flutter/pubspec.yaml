@@ -1,0 +1,32 @@
+name: legado_flutter
+description: Legado cross-platform client (Flutter migration). Reference Android source in ../legado-master only.
+publish_to: "none"
+version: 0.1.0+1
+
+environment:
+  sdk: ">=3.5.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  archive: ^4.0.0
+  dio: ^5.7.0
+  http: ^1.2.2
+  shared_preferences: ^2.3.3
+  path: ^1.9.0
+  html: ^0.15.4
+  xpath_selector: ^3.0.2
+  xpath_selector_html_parser: ^3.0.1
+  cookie_jar: ^4.0.8
+  dio_cookie_manager: ^3.1.1
+  json_path: ^0.7.4
+  quickjs: ^1.0.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
