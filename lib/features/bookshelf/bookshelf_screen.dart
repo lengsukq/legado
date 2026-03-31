@@ -36,12 +36,16 @@ class _BookshelfScreenState extends State<BookshelfScreen> {
     super.didChangeDependencies();
     if (_depsInitialized) return;
     final deps = AppDependencies.of(context);
-    _controller = BookshelfController(deps.webBookService);
+    _controller = BookshelfController(
+      deps.webBookService,
+      deps.sourceSubscribeService(),
+    );
     deps.historyRepository().then((repo) {
       if (mounted) {
         _controller.initialize(repo);
       }
     });
+    _controller.loadSubscriptions();
     _depsInitialized = true;
   }
 
@@ -90,9 +94,21 @@ class _BookshelfScreenState extends State<BookshelfScreen> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: FilledButton(
-                onPressed: _parseSources,
-                child: Text('解析 ${state.sources.length} 个书源'),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: FilledButton(
+                      onPressed: _parseSources,
+                      child: Text('解析 ${state.sources.length} 个书源'),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  FilledButton.tonal(
+                    onPressed: () =>
+                        _controller.addCurrentInputAsSubscribe(_sourceCtrl.text),
+                    child: const Text('添加为订阅'),
+                  ),
+                ],
               ),
             ),
             if (state.sources.isNotEmpty)
@@ -146,6 +162,25 @@ class _BookshelfScreenState extends State<BookshelfScreen> {
                           ),
                     );
                   },
+                ),
+              ),
+            if (state.subscribes.isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        '订阅源：${state.subscribes.length} 条',
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                    ),
+                    IconButton(
+                      tooltip: '刷新所有订阅源',
+                      onPressed: _controller.refreshAllSubscribes,
+                      icon: const Icon(Icons.sync),
+                    ),
+                  ],
                 ),
               ),
             Row(

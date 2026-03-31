@@ -7,15 +7,20 @@ import '../../core/entities/search_book_model.dart';
 import '../../core/entities/session_book.dart';
 import '../../core/history/read_record_model.dart';
 import '../../core/history/history_repository.dart';
+import '../../core/models/source_subscribe.dart';
+import '../../core/source_subscribe/source_subscribe_service.dart';
 import '../../core/tools/book_source_inspector.dart';
 import '../../core/web_book/web_book_service.dart';
 
 class BookshelfController extends ChangeNotifier {
-  BookshelfController(this._webBook)
-      : _importService = const BookSourceImportService();
+  BookshelfController(
+    this._webBook,
+    this._subscribeService,
+  ) : _importService = const BookSourceImportService();
 
   final WebBookService _webBook;
   final BookSourceImportService _importService;
+  final SourceSubscribeService _subscribeService;
   List<BookSourceModel> _sources = [];
   BookSourceModel? _selected;
   List<SearchBookModel> _hits = [];
@@ -24,6 +29,9 @@ class BookshelfController extends ChangeNotifier {
   List<ReadRecordModel> _recent = const [];
   final Map<BookSourceModel, BookSourceInspectionResult> _inspections = {};
   HistoryRepository? _historyRepository;
+  List<SourceSubscribe> _subscribes = [];
+
+  List<SourceSubscribe> get subscribes => List.unmodifiable(_subscribes);
 
   List<BookSourceModel> get sources => _sources;
   BookSourceModel? get selectedSource => _selected;
@@ -73,6 +81,47 @@ class BookshelfController extends ChangeNotifier {
     }
 
     notifyListeners();
+  }
+
+  Future<void> loadSubscriptions() async {
+    _subscribes = await _subscribeService.listAll();
+    notifyListeners();
+  }
+
+  Future<void> addCurrentInputAsSubscribe(String input) async {
+    final url = input.trim();
+    if (url.isEmpty) return;
+    final uri = Uri.tryParse(url);
+    final name = uri?.host.isNotEmpty == true ? uri!.host : url;
+    final now = DateTime.now().millisecondsSinceEpoch;
+    final sub = SourceSubscribe(
+      name: name,
+      url: url,
+      enabled: true,
+      lastUpdateTime: now,
+    );
+    await _subscribeService.addOrUpdate(sub);
+    await loadSubscriptions();
+  }
+
+  Future<void> refreshAllSubscribes() async {
+    try {
+      final result = await _subscribeService.refreshAll(existing: _sources);
+      _sources = result;
+      _selected = _sources.isNotEmpty ? _sources.first : null;
+      if (_sources.isNotEmpty) {
+        const inspector = BookSourceInspector();
+        _inspections
+          ..clear();
+        for (final s in _sources) {
+          _inspections[s] = inspector.inspect(s);
+        }
+      }
+      await loadSubscriptions();
+    } catch (e) {
+      _error = '$e';
+      notifyListeners();
+    }
   }
 
   void selectSource(BookSourceModel? source) {
