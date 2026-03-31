@@ -1,0 +1,10 @@
+^C:\USERS\SU\WEBSTORMPROJECTS\LEGADO\BUILD\WINDOWS\X64\CMAKEFILES\F187B5DE1EF169AD8AFB39584EB5FE53\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\Microsoft Visual Studio\18\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/Users/su/WebstormProjects/legado/windows -BC:/Users/su/WebstormProjects/legado/build/windows/x64 --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/su/WebstormProjects/legado/build/windows/x64/legado_flutter.slnx
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
